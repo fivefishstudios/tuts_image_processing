@@ -28,7 +28,7 @@ plt.figure(figsize=(12, 6))
 plt.suptitle("Comparing different kernels using cv2.filter2D()", fontsize=14, fontweight='bold')
 
 # Load the original image:
-image = cv2.imread('./road.png')
+image = cv2.imread('./images/scope.jpg')
 
 # We try different kernels
 # Identify kernel (does not modify the image)
@@ -87,31 +87,55 @@ outline_kernel = np.array([[-1, -1, -1],
                            [-1, 8, -1],
                            [-1, -1, -1]])
 
+
 # Apply all the kernels:
 original_image = cv2.filter2D(image, -1, kernel_identity)
-edge_image_1 = cv2.filter2D(image, -1, kernel_edge_detection_1)
-edge_image_2 = cv2.filter2D(image, -1, kernel_edge_detection_2)
-edge_image_3 = cv2.filter2D(image, -1, kernel_edge_detection_3)
-sharpen_image = cv2.filter2D(image, -1, kernel_sharpen)
-unsharp_masking_image = cv2.filter2D(image, -1, kernel_unsharp_masking)
-blur_image = cv2.filter2D(image, -1, kernel_blur)
-gaussian_blur_image = cv2.filter2D(image, -1, gaussian_blur)
-emboss_image = cv2.filter2D(image, -1, kernel_emboss)
-sobel_x_image = cv2.filter2D(image, -1, sobel_x_kernel)
-sobel_y_image = cv2.filter2D(image, -1, sobel_y_kernel)
-outline_image = cv2.filter2D(image, -1, outline_kernel)
+# edge_image_1 = cv2.filter2D(image, -1, kernel_edge_detection_1)
+# edge_image_2 = cv2.filter2D(image, -1, kernel_edge_detection_2)
+# edge_image_3 = cv2.filter2D(image, -1, kernel_edge_detection_3)
+# sharpen_image = cv2.filter2D(image, -1, kernel_sharpen)
+# unsharp_masking_image = cv2.filter2D(image, -1, kernel_unsharp_masking)
+# blur_image = cv2.filter2D(image, -1, kernel_blur)
+# gaussian_blur_image = cv2.filter2D(image, -1, gaussian_blur)
+# emboss_image = cv2.filter2D(image, -1, kernel_emboss)
+# sobel_x_image = cv2.filter2D(image, -1, sobel_x_kernel)
+# sobel_y_image = cv2.filter2D(image, -1, sobel_y_kernel)
+# outline_image = cv2.filter2D(image, -1, outline_kernel)
 
-ret = cv2.imshow('outline', outline_image)
+# see outputs
+# ret = cv2.imshow('identity kernel', original_image)
+# cv2.waitKey(0)
+#
+# ret = cv2.imshow('My kernel blur', mykernel_image)
+# cv2.waitKey(0)
+
+
+experiment_kernel = 3.5 * np.array([[0.3,   0.1,   1.4],
+                                    [0.3,   -0.25,  -.6],
+                                    [-1,     0.1,   -0.4]])
+mykernel_image = cv2.filter2D(image, -1, experiment_kernel)
+
+side_by_side = np.concatenate([original_image, mykernel_image],axis=1)
+ret = cv2.imshow('Compare', side_by_side)
 cv2.waitKey(0)
 
-ret = cv2.imshow('sobel y image', sobel_y_image)
-cv2.waitKey(0)
+# ret = cv2.imshow('kernel blur', blur_image)
+# cv2.waitKey(0)
+#
+# ret = cv2.imshow('gaussian blur', gaussian_blur_image)
+# cv2.waitKey(0)
 
-ret = cv2.imshow('emboss image', emboss_image)
-cv2.waitKey(0)
+# ret = cv2.imshow('outline', outline_image)
+# cv2.waitKey(0)
+#
+# ret = cv2.imshow('sobel y image', sobel_y_image)
+# cv2.waitKey(0)
+#
+# ret = cv2.imshow('emboss image', emboss_image)
+# cv2.waitKey(0)
 
-ret = cv2.imshow('edge 3 image', edge_image_3)
-cv2.waitKey(0)
+# ret = cv2.imshow('edge 3 image', edge_image_3)
+# cv2.waitKey(0)
 
 # Show all the images:
 # show_with_matplotlib(original_image, "identity kernel", 1)
