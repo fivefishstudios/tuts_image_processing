@@ -110,11 +110,20 @@ original_image = cv2.filter2D(image, -1, kernel_identity)
 # cv2.waitKey(0)
 
 
-experiment_kernel = 3.5 * np.array([[0.3,   0.1,   1.4],
-                                    [0.3,   -0.25,  -.6],
-                                    [-1,     0.1,   -0.4]])
+# experiment_kernel = 1/3 * np.array([[0,   0,  0],
+#                               [1,   1,  1],
+#                               [0,   0,  0]])
+
+# generating the motion blur kernel
+size=200
+experiment_kernel = np.zeros((size, size))
+experiment_kernel[int((size-1)/2), :] = np.ones(size)
+experiment_kernel = experiment_kernel / size
+
+# apply kernel
 mykernel_image = cv2.filter2D(image, -1, experiment_kernel)
 
+# display output
 side_by_side = np.concatenate([original_image, mykernel_image],axis=1)
 ret = cv2.imshow('Compare', side_by_side)
 cv2.waitKey(0)
