@@ -10,7 +10,7 @@ def get_ref_contour(img):
     ref_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(ref_gray, 127, 255, cv2.THRESH_BINARY)  # type = 0?
     cv2.imshow('thresh', thresh)
-    cv2.waitKey()
+    # cv2.waitKey()
 
     # Find all the contours in the thresholded image. The values # for the second and third parameters are restricted to a
     # certain number of possible values. You can learn more
@@ -32,11 +32,11 @@ def get_ref_contour(img):
 def get_all_contours(img):
     ref_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     cv2.imshow('gray input', ref_gray)
-    cv2.waitKey()
+    # cv2.waitKey()
 
     ret, thresh = cv2.threshold(ref_gray, 127, 255, 0)
     cv2.imshow('thresh input', thresh )
-    cv2.waitKey()
+    # cv2.waitKey()
 
     contours, hierarchy = cv2.findContours(thresh, 1, 2)
     return contours
@@ -44,12 +44,12 @@ def get_all_contours(img):
 
 if __name__ == '__main__':
     # Boomerang reference image
-    img1 = cv2.imread('./images/boomerang.jpg', cv2.IMREAD_COLOR)
+    img1 = cv2.imread('./images/f4.jpg', cv2.IMREAD_COLOR)
     cv2.imshow('Ref', img1)
     # cv2.waitKey()
 
     # input image (containing different shapes)
-    img2 = cv2.imread('./images/contours-assorted.jpg', cv2.IMREAD_COLOR)
+    img2 = cv2.imread('./images/jets.jpg', cv2.IMREAD_COLOR)
 
     # extract the reference contour
     ref_contour = get_ref_contour(img1)
@@ -63,12 +63,12 @@ if __name__ == '__main__':
     # find the closes contour
     for contour in input_contours:
         # match the shapes and pick the closest one
-        ret = cv2.matchShapes(ref_contour, contour, 1, 0.0)     # what are these parameters?
+        ret = cv2.matchShapes(ref_contour, contour, cv2.CONTOURS_MATCH_I1, 0.0)     # what are these parameters?
         if ret < min_dist:
             min_dist = ret
             closest_contour = contour
 
-    cv2.drawContours(img2, [closest_contour], -1, (0,0,250), 4)   # what are these parameters?
+    cv2.drawContours(img2, [closest_contour], -1, (0,0,250), 14)   # what are these parameters?
     cv2.imshow('Output', img2)
     cv2.waitKey(0)
 
